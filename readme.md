@@ -11,8 +11,8 @@ Check Redis is running `brew services start redis`
 
 ### Next start the Frontend and the Backend.
 In two terminal windows run these commands \
-Frontend: `cd frontend` `npm run dev` \
-Backend: `cd backend` `npm start`
+Frontend: `cd frontend` `npm i` `npm run dev` \
+Backend: `cd backend` `npm i` `npm start`
 
 ### Open on LocalHost: 
 Click this link: http://localhost:3000 and use the App.
