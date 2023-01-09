@@ -1,7 +1,21 @@
 import axios from "axios";
+import Redis from "ioredis";
+
+const redis = new Redis({
+    port: 6379,
+    host: '127.0.0.1'
+});
 
 const filmFunctions = {
     getCharactersByFilm: async (req, res) => {
+
+        let cacheEntry = await redis.get(`film:${req.params.id}`);
+
+        if (cacheEntry) {
+            cacheEntry = JSON.parse(cacheEntry);
+            return res.status(200).json({characters: cacheEntry, source: 'cache'})
+        }
+
         const characters = [];
 
         const filmCharacters = await axios({
@@ -24,7 +38,8 @@ const filmFunctions = {
             })
         }
 
-        return res.status(200).json(characters);
+        redis.set(`film:${req.params.id}`, JSON.stringify(characters));
+        return res.status(200).json({characters, source: 'API'});
     }
 }
 

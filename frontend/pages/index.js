@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
         method: 'GET',
         url: `http://localhost:1003/api/characters`,
     }).then((result) => {
-        return result.data;
+        return result.data.characterList;
     }).catch(() => {
         return [];
     })
@@ -70,21 +70,35 @@ export default function Home(props) {
         }
     ]
     const handleSearch = async (value) => {
+        let searchResults;
         setLoading(true);
         setCurrentFilter("All Characters")
 
-        const searchResults = await axios({
-            method: 'GET',
-            url: `http://localhost:1003/api/characters?sid=${value}`,
-        }).then((result) => {
-            setLoading(false)
-            return result.data;
-        }).catch(() => {
-            setLoading(false)
-            return [];
-        })
+        if (value !== "") {
+            searchResults = await axios({
+                method: 'GET',
+                url: `http://localhost:1003/api/characters?sid=${value}`,
+            }).then((result) => {
+                setLoading(false)
+                return result.data.character;
+            }).catch(() => {
+                setLoading(false)
+                return [];
+            })
+        } else {
+            searchResults = await axios({
+                method: 'GET',
+                url: `http://localhost:1003/api/characters`,
+            }).then((result) => {
+                setLoading(false)
+                return result.data.characterList;
+            }).catch(() => {
+                setLoading(false)
+                return [];
+            })
+        }
 
-        setCharacters(searchResults)
+        return setCharacters(searchResults)
     }
 
     const handleFilter = async (filter) => {
@@ -96,11 +110,13 @@ export default function Home(props) {
         }
 
         if (filter === "all") {
+            console.log("allCharacters")
             const allCharacters = await axios({
                 method: 'GET',
                 url: `http://localhost:1003/api/characters`,
             }).then((result) => {
-                return result.data;
+                setLoading(false)
+                return result.data.characterList;
             }).catch(() => {
                 return [];
             })
@@ -113,7 +129,7 @@ export default function Home(props) {
             url: `http://localhost:1003/api/films/${filter}/characters`,
         }).then((result) => {
             setLoading(false)
-            return result.data
+            return result.data.characters
         }).catch(() => {
             setLoading(false)
             return [];
@@ -193,7 +209,7 @@ export default function Home(props) {
                                     >
                                         {filter.name}
                                     </p>
-                                    )
+                                )
                             })}
                         </div>
                     ) : null}

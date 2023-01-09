@@ -41,7 +41,10 @@ function CharacterCard({character, setModalOpen, setSelectedCharacter, handleFav
             setModalOpen(true)
         }}>
 
-            <div className={styles.heartWrapper} onClick={() => handleFavorite(character)}>
+            <div className={styles.heartWrapper} onClick={(e) => {
+                e.stopPropagation()
+                handleFavorite(character)
+            }}>
 
             <Heart width={"20"} height={"20"} selected={isFavorite ? true : false}/>
             </div>

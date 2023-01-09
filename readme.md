@@ -5,6 +5,10 @@
 `git clone https://github.com/nathantinius/lw-tinius.git` \
 `cd lw-tinius`
 
+### Install Redis Locally using Homebrew
+`brew install redis` \
+Check Redis is running `brew services start redis` 
+
 ### Next start the Frontend and the Backend.
 In two terminal windows run these commands \
 Frontend: `cd frontend` `npm run dev` \
