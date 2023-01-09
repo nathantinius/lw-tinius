@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    align-self: flex-start;
+    background-color: var(--swapi-true-white);
+    min-width: 300px;
+    max-width: 400px;
+    padding: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    gap: 2rem;
+    position: relative;
+}
+
+.container:hover {
+    background-color: var(--swapi-white-hover);
+    cursor: pointer;
+}
+
+.heartWrapper {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+.profileImage {
+    border-radius: 50%;
+    border: 6px solid var(--swapi-true-white);
+}
+
+.aboutList {
+
+    list-style-type: none;
+}

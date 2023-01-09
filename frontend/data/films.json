@@ -1,0 +1,26 @@
+{
+  "https://swapi.dev/api/films/4/": {
+    "name": "The Phantom Menace",
+    "value": "4"
+  },
+  "https://swapi.dev/api/films/5/": {
+    "name": "Attack of the Clones",
+    "value": "5"
+  },
+  "https://swapi.dev/api/films/6/": {
+    "name": "Revenge of the Sith",
+    "value": "6"
+  },
+  "https://swapi.dev/api/films/1/": {
+    "name": "A New Hope",
+    "value": "1"
+  },
+  "https://swapi.dev/api/films/2/": {
+    "name": "The Empire Strikes Back",
+    "value": "2"
+  },
+  "https://swapi.dev/api/films/3/": {
+    "name": "Return of the Jedi",
+    "value": "3"
+  }
+}
