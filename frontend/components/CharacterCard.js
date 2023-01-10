@@ -36,17 +36,24 @@ function CharacterCard({character, setModalOpen, setSelectedCharacter, handleFav
 
 
     return (
-        <div className={styles.container} onClick={() => {
-            setSelectedCharacter({...character, species});
-            setModalOpen(true)
-        }}>
+        <div
+            className={styles.container}
+            onClick={() => {
+                setSelectedCharacter({...character, species});
+                setModalOpen(true)
+            }}
+            data-testid={'characterCard'}
+        >
 
-            <div className={styles.heartWrapper} onClick={(e) => {
-                e.stopPropagation()
-                handleFavorite(character)
-            }}>
-
-            <Heart width={"20"} height={"20"} selected={isFavorite ? true : false}/>
+            <div
+                className={styles.heartWrapper}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    handleFavorite(character)
+                }}
+                data-testid={`heart-${imgRef}`}
+            >
+                <Heart width={"20"} height={"20"} selected={isFavorite ? true : false} testId={`heart-svg-${imgRef}`} />
             </div>
             <Image src={characterImages[imgRef]} alt={character.name} width='130' height='130'
                    className={styles.profileImage}/>

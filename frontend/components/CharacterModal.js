@@ -11,7 +11,7 @@ function CharacterModal({setModalOpen, selectedCharacter, handleFavorite, favori
 
     return (
         <div className={styles.container} onClick={() => setModalOpen(false)}>
-            <div className={styles.characterProfileContainer}>
+            <div className={styles.characterProfileContainer} data-testid={`characterModal-${slugify(selectedCharacter.name)}`}>
                 <div className={styles.nameWrapper}>
                     <Image className={styles.profileImage} alt={selectedCharacter.name} src={characterImages[slugify(selectedCharacter.name)]}
                            width={'100'} height={'100'}/>

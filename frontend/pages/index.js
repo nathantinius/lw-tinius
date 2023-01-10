@@ -8,7 +8,7 @@ import CharacterCard from "../components/CharacterCard";
 import Caret from "../components/icons/Caret";
 import CharacterModal from "../components/CharacterModal";
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
 
     const characterList = await axios({
         method: 'GET',
@@ -202,7 +202,7 @@ export default function Home(props) {
                                         onClick={() => {
                                             setCurrentFilter(filter.name)
                                             setOpen(!open)
-                                            handleFilter(filter.value).then(r => console.log("Filtered!"));
+                                            handleFilter(filter.value).then(() => console.log("Filtered!"));
                                         }}
                                         className={styles.filterItem}
                                         key={filter.value}
@@ -217,7 +217,7 @@ export default function Home(props) {
                 {loading ? (<div>Loading...</div>) : (
                     <>
                         {characters.length === 0 ? (
-                            <div>These are not the characters you are looking for.</div>
+                            <p>These are not the characters you are looking for.</p>
                         ) : (
                             <>
                                 <div className={styles.characterCardWrapper}>
