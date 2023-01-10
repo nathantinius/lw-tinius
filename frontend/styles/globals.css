@@ -60,6 +60,7 @@ li {
   --swapi-white-hover: #ffe300;
   --swapi-yellow: #ffe300;
   --swapi-dark-grey: #1c1e22;
+  --swapi-favorite: #ce002f;
 }
 
 .heart {
@@ -67,5 +68,5 @@ li {
 }
 
 .selected-heart {
-  fill: #ce002f;
+  fill: var(--swapi-favorite);
 }
