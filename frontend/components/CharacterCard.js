@@ -17,7 +17,7 @@ function CharacterCard({character, setModalOpen, setSelectedCharacter, handleFav
     const imgRef = slugify(character.name)
 
     const getSpecies = async (speciesUrl) => {
-        await axios({
+        return await axios({
             method: "GET",
             url: `http://localhost:1003/api/species?s=${speciesUrl}`
         }).then((result) => {
@@ -30,7 +30,9 @@ function CharacterCard({character, setModalOpen, setSelectedCharacter, handleFav
 
     useEffect(() => {
         if (character.species.length > 0) {
-            getSpecies(character.species[0])
+            getSpecies(character.species[0]).then((result) => {
+                setSpecies(result)
+            })
         }
     }, [character]);
 
@@ -53,7 +55,7 @@ function CharacterCard({character, setModalOpen, setSelectedCharacter, handleFav
                 }}
                 data-testid={`heart-${imgRef}`}
             >
-                <Heart width={"20"} height={"20"} selected={isFavorite ? true : false} testId={`heart-svg-${imgRef}`} />
+                <Heart width={"20"} height={"20"} selected={!!isFavorite} testId={`heart-svg-${imgRef}`} />
             </div>
             <Image src={characterImages[imgRef]} alt={character.name} width='130' height='130'
                    className={styles.profileImage}/>
