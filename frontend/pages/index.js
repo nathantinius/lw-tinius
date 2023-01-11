@@ -124,17 +124,18 @@ export default function Home(props) {
             return setCharacters(allCharacters);
         }
 
-        const filterResults = await axios({
+        const characters = await axios({
             method: 'GET',
-            url: `http://localhost:1003/api/films/${filter}/characters`,
+            url: `http://localhost:1003/api/characters`,
         }).then((result) => {
-            setLoading(false)
-            return result.data.characters
+            return result.data.characterList
         }).catch(() => {
-            setLoading(false)
             return [];
         })
 
+        const filterResults = characters.filter(c => c.films.includes(`https://swapi.dev/api/films/${filter}/`));
+
+        setLoading(false);
         return setCharacters(filterResults)
     }
 

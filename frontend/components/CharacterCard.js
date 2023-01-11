@@ -4,22 +4,17 @@ import axios from 'axios';
 import styles from './CharacterCard.module.css';
 import characterImages from '../data/characterImages.json';
 import Heart from "./icons/Heart";
+import slugify from "../functions/slugify";
 
 function CharacterCard({character, setModalOpen, setSelectedCharacter, handleFavorite, favorites}) {
     const [species, setSpecies] = useState("Human");
-    const slugify = (name) => {
-        let nameSlugArray = name.split(" ");
-        let nameSlug = nameSlugArray.join("-");
-
-        return nameSlug.toLowerCase();
-    }
 
     const imgRef = slugify(character.name)
 
-    const getSpecies = async (speciesUrl) => {
+    const getSpecies = async (speciesId) => {
         return await axios({
             method: "GET",
-            url: `http://localhost:1003/api/species?s=${speciesUrl}`
+            url: `http://localhost:1003/api/species/${speciesId.split("/")[5]}`
         }).then((result) => {
             setSpecies(result.data.speciesName)
             return result.data.speciesName

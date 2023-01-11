@@ -4,7 +4,8 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 import speciesRoutes from './routes/species.js';
 import characterRoutes from './routes/characters.js';
-import filmRoutes from './routes/films.js';
+import starshipRoutes from './routes/starships.js';
+import filmRoutes from './routes/films.js'
 
 const router = express();
 
@@ -34,6 +35,7 @@ router.use((req, res, next) => {
 
 router.use('/api/species', speciesRoutes)
 router.use('/api/characters', characterRoutes)
+router.use('/api/starships', starshipRoutes)
 router.use('/api/films', filmRoutes)
 
 router.use((req, res) => {

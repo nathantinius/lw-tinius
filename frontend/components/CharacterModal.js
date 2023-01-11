@@ -1,19 +1,70 @@
-import React from 'react';
-import styles from './CharacterModal.module.css';
+import React, {useMemo, useState} from 'react';
 import Image from "next/image";
-import characterImages from '../data/characterImages.json';
+import axios from "axios";
 import slugify from "../functions/slugify";
-import starships from '../data/starships.json';
-import films from '../data/films.json';
+import styles from './CharacterModal.module.css';
+import characterImages from '../data/characterImages.json';
+
 
 function CharacterModal({setModalOpen, selectedCharacter, handleFavorite, favorites}) {
+    const [starships, setStarships] = useState(null);
+    const [films, setFilms] = useState(null);
     const isFavorite = favorites.some(f => f.name === selectedCharacter.name);
+
+    const getFilms = async (filmIds) => {
+        const filmsList = [];
+
+        for (let f of filmIds) {
+            const film = await axios({
+                method: "GET",
+                url: `http://localhost:1003/api/films/${f.split("/")[5]}`
+            }).then((result) => {
+                return result.data.film
+            }).catch(() => {
+                return null
+            })
+
+            filmsList.push(film);
+        }
+        return filmsList
+    }
+
+    const getStarships = async (starshipIds) => {
+        const starshipsList = [];
+
+        for (let s of starshipIds) {
+            const starship = await axios({
+                method: 'GET',
+                url: `http://localhost:1003/api/starships/${s.split("/")[5]}`,
+            }).then((result) => {
+                return result.data.starship;
+            }).catch(() => {
+                return null;
+            })
+
+            starshipsList.push(starship);
+        }
+        return starshipsList;
+    }
+
+    useMemo(() => {
+        getStarships(selectedCharacter.starships).then((result) => {
+            setStarships(result)
+        })
+
+        getFilms(selectedCharacter.films).then((result) => {
+            setFilms(result)
+        })
+    }, [selectedCharacter]);
+
 
     return (
         <div className={styles.container} onClick={() => setModalOpen(false)}>
-            <div className={styles.characterProfileContainer} data-testid={`characterModal-${slugify(selectedCharacter.name)}`}>
+            <div className={styles.characterProfileContainer}
+                 data-testid={`characterModal-${slugify(selectedCharacter.name)}`}>
                 <div className={styles.nameWrapper}>
-                    <Image className={styles.profileImage} alt={selectedCharacter.name} src={characterImages[slugify(selectedCharacter.name)]}
+                    <Image className={styles.profileImage} alt={selectedCharacter.name}
+                           src={characterImages[slugify(selectedCharacter.name)]}
                            width={'100'} height={'100'}/>
                     <div className={styles.speciesWrapper}>
                         <h1>{selectedCharacter.name}</h1>
@@ -43,27 +94,39 @@ function CharacterModal({setModalOpen, selectedCharacter, handleFavorite, favori
                     </div>
                     <div className={styles.statSection}>
                         <h3>My Movies:</h3>
-                        <ul>
-                            {selectedCharacter.films.map((f) => {
-                                return <li key={films[f].name}>
-                                    <p>{films[f].name}</p>
-                                </li>
-                            })}
-                        </ul>
+                        {!films ? (
+                            <p>loading...</p>
+                        ) : (
+                            <ul>
+                                {films.map((f) => {
+                                    return <li key={f.title}>
+                                        <p>{f.title}</p>
+                                    </li>
+                                })}
+                            </ul>
+                        )}
                     </div>
                     <div className={styles.statSection}>
-                        {selectedCharacter.starships.length <= 0 ? (
-                            <h3>I don't fly Starships</h3>
+                        <h3>Starships I've Flown:</h3>
+                        {!starships ? (
+                            <>
+                                <p>loading...</p>
+                            </>
                         ) : (
                             <>
-                                <h3>Starships I've Flown:</h3>
-                                <ul>
-                                    {selectedCharacter.starships.map((s) => {
-                                        return <li key={starships[s].name}>
-                                            <p>{starships[s].name}</p>
-                                        </li>
-                                    })}
-                                </ul>
+                                {starships.length <= 0 ? (
+                                    <p>I don't fly Starships</p>
+                                ) : (
+                                    <>
+                                        <ul>
+                                            {starships.map((s) => {
+                                                return <li key={s.name}>
+                                                    <p>{s.name}</p>
+                                                </li>
+                                            })}
+                                        </ul>
+                                    </>
+                                )}
                             </>
                         )}
                     </div>
