@@ -27,7 +27,7 @@ Click this link: http://localhost:3000 and use the App.
 * Let users login to store their favorites in perpetuity
 * Share favorite characters with other users 
 * Create a filter by popularity.
-* Alternatively store SWAPI data into a DB and call the DB from gateway API.
+* Alternatively store SWAPI data into a DB and call the DB from the gateway API.
   - This would allow for a better querying system eliminating followup calls to the slow SWAPI.
   - This would also allow for some additional functionality -- such as giving each character a popularity score.
 
