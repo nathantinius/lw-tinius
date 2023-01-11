@@ -17,7 +17,7 @@ const characterFunctions = {
                 return res.status(200).json({character: cacheEntry, source: 'cache'});
             }
 
-            await axios({
+            return await axios({
                 method: "GET",
                 url: `https://swapi.dev/api/people?search=${searchFilter.toLowerCase()}`
             }).then((result) => {
