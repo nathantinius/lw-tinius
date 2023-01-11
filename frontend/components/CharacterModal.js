@@ -6,10 +6,9 @@ import styles from './CharacterModal.module.css';
 import characterImages from '../data/characterImages.json';
 
 
-function CharacterModal({setModalOpen, selectedCharacter, handleFavorite, favorites}) {
+function CharacterModal({setModalOpen, selectedCharacter}) {
     const [starships, setStarships] = useState(null);
     const [films, setFilms] = useState(null);
-    const isFavorite = favorites.some(f => f.name === selectedCharacter.name);
 
     const getFilms = async (filmIds) => {
         const filmsList = [];
@@ -131,12 +130,6 @@ function CharacterModal({setModalOpen, selectedCharacter, handleFavorite, favori
                         )}
                     </div>
                 </div>
-                {isFavorite ? (
-                    <div className={"button"} onClick={() => handleFavorite(selectedCharacter)}>Remove from
-                        Favorites</div>
-                ) : (
-                    <div className={"button"} onClick={() => handleFavorite(selectedCharacter)}>Add to Favorites</div>
-                )}
             </div>
         </div>
     );
